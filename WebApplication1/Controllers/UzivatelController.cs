@@ -18,7 +18,14 @@ namespace WebApplication1.Controllers
 
         public IActionResult Registrovat(string jmeno, string heslo, string heslo_kontrola)
             {
-                if(jmeno != null && jmeno.Trim().lenght > 0)
+            if (jmeno == null || jmeno.Trim().Length == 0) 
+                return RedirectToAction("Registrovat");
+            if (heslo == null || heslo.Trim().Length == 0) 
+                return RedirectToAction("Registrovat");
+            if (heslo != heslo_kontrola) 
+                return RedirectToAction("Registrovat");
+            throw new Exception();
+
             }
 
     }
