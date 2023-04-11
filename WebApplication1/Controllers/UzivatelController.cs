@@ -24,7 +24,8 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Registrovat");
             if (heslo != heslo_kontrola) 
                 return RedirectToAction("Registrovat");
-            throw new Exception();
+            string hash = BCrypt.Net.BCrypt.HashPassword(heslo);
+            Uzivatel novyUzivatel = new Uzivatel { Jmeno = jmeno, Heslo = hash };
 
             }
 
