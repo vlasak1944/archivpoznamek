@@ -1,8 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Data;
+using WebApplication1.Models;
+
 namespace WebApplication1.Controllers
 {
     public class UzivatelController : Controller
     {
+        private readonly MvcPoznamkyContext _context;
+        
+        public UzivatelController(MvcPoznamkyContext context)
+        {
+
+            _context = context;
+        }
         [HttpGet]
         public IActionResult Prihlasit()
         {
@@ -27,6 +37,10 @@ namespace WebApplication1.Controllers
             string hash = BCrypt.Net.BCrypt.HashPassword(heslo);
             Uzivatel novyUzivatel = new Uzivatel { Jmeno = jmeno, Heslo = hash };
 
+            _context.Uzivatele.Add(novyUzivatel);
+            _context.SaveChanges();
+
+            return RedirectToAction("Prihlasit");
             }
 
     }
