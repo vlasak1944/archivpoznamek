@@ -4,8 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MvcPoznamkyContext>(options => options.UseSqlServer
-(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<MvcPoznamkyContext>(opt => opt.UseSqlServer(builder.Configuration["DatabaseConnection"]));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
