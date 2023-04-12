@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Data;
 using WebApplication1.Models;
-
+using System.Linq;
 namespace WebApplication1.Controllers
 {
     public class UzivatelController : Controller
@@ -33,6 +33,13 @@ namespace WebApplication1.Controllers
             if (heslo == null || heslo.Trim().Length == 0) 
                 return RedirectToAction("Registrovat");
             if (heslo != heslo_kontrola) 
+                return RedirectToAction("Registrovat");
+            Uzivatel totozny = _context.Uzivatele
+                .Where(u => u.Jmeno == jmeno)
+                .FirstOrDefault();
+
+
+            if(totozny != null)
                 return RedirectToAction("Registrovat");
             string hash = BCrypt.Net.BCrypt.HashPassword(heslo);
             Uzivatel novyUzivatel = new Uzivatel { Jmeno = jmeno, Heslo = hash };
