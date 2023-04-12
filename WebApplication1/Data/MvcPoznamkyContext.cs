@@ -5,9 +5,7 @@ namespace WebApplication1.Data
 {
     public class MvcPoznamkyContext : DbContext
     {
-        public MvcPoznamkyContext(SqlServerDbContextOptions<MvcPoznamkyContext> options){ }
-
+        public MvcPoznamkyContext(DbContextOptions<MvcPoznamkyContext> options) : base(options) { }
         public DbSet<Uzivatel> Uzivatele { get; set; }
     }
 }
-// 1:05:25
