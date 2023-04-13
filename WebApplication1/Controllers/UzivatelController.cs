@@ -7,7 +7,7 @@ namespace WebApplication1.Controllers
     public class UzivatelController : Controller
     {
         private readonly MvcPoznamkyContext _context;
-        
+
         public UzivatelController(MvcPoznamkyContext context)
         {
 
@@ -27,19 +27,19 @@ namespace WebApplication1.Controllers
         [HttpPost]
 
         public IActionResult Registrovat(string jmeno, string heslo, string heslo_kontrola)
-            {
-            if (jmeno == null || jmeno.Trim().Length == 0) 
+        {
+            if (jmeno == null || jmeno.Trim().Length == 0)
                 return RedirectToAction("Registrovat");
-            if (heslo == null || heslo.Trim().Length == 0) 
+            if (heslo == null || heslo.Trim().Length == 0)
                 return RedirectToAction("Registrovat");
-            if (heslo != heslo_kontrola) 
+            if (heslo != heslo_kontrola)
                 return RedirectToAction("Registrovat");
             Uzivatel totozny = _context.Uzivatele
                 .Where(u => u.Jmeno == jmeno)
                 .FirstOrDefault();
 
 
-            if(totozny != null)
+            if (totozny != null)
                 return RedirectToAction("Registrovat");
             string hash = BCrypt.Net.BCrypt.HashPassword(heslo);
             Uzivatel novyUzivatel = new Uzivatel { Jmeno = jmeno, Heslo = hash };
@@ -48,7 +48,30 @@ namespace WebApplication1.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Prihlasit");
-            }
+        }
+        [HttpPost]
+        public IActionResult Prihlasit(string jmeno, string heslo)
+        {
+            if (jmeno == null || heslo == null)
+                return RedirectToAction("Prihlasit");
 
+
+            Uzivatel hledany = _context.Uzivatele
+                 .Where(u => u.Jmeno == jmeno)
+                 .FirstOrDefault();
+
+            if (hledany == null)
+                return RedirectToAction("Prihlasit");
+
+            if (!BCrypt.Net.BCrypt.Verify(heslo, hledany.Heslo))
+                return RedirectToAction("Prihlasit");
+
+            return RedirectToAction("Profil");
+        }
+
+        public IActionResult Profil()
+         {
+           return View();
+         }
     }
 }
