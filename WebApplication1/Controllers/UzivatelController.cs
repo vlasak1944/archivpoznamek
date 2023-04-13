@@ -29,44 +29,42 @@ namespace WebApplication1.Controllers
         public IActionResult Registrovat(string jmeno, string heslo, string heslo_kontrola)
         {
             if (jmeno == null || jmeno.Trim().Length == 0)
-                return RedirectToAction("Registrovat");
+                return Redirect("Registrovat");
             if (heslo == null || heslo.Trim().Length == 0)
-                return RedirectToAction("Registrovat");
+                return Redirect("Registrovat");
             if (heslo != heslo_kontrola)
-                return RedirectToAction("Registrovat");
+                return Redirect("Registrovat");
             Uzivatel totozny = _context.Uzivatele
                 .Where(u => u.Jmeno == jmeno)
                 .FirstOrDefault();
 
 
             if (totozny != null)
-                return RedirectToAction("Registrovat");
+                return Redirect("Registrovat");
             string hash = BCrypt.Net.BCrypt.HashPassword(heslo);
             Uzivatel novyUzivatel = new Uzivatel { Jmeno = jmeno, Heslo = hash };
 
             _context.Uzivatele.Add(novyUzivatel);
             _context.SaveChanges();
 
-            return RedirectToAction("Prihlasit");
+            return Redirect("Prihlasit");
         }
         [HttpPost]
         public IActionResult Prihlasit(string jmeno, string heslo)
         {
             if (jmeno == null || heslo == null)
-                return RedirectToAction("Prihlasit");
+                return Redirect("Prihlasit");
 
 
             Uzivatel hledany = _context.Uzivatele
-                 .Where(u => u.Jmeno == jmeno)
-                 .FirstOrDefault();
-
+                 .FirstOrDefault(u => u.Jmeno == jmeno);
             if (hledany == null)
-                return RedirectToAction("Prihlasit");
+                return Redirect("Prihlasit");
 
             if (!BCrypt.Net.BCrypt.Verify(heslo, hledany.Heslo))
-                return RedirectToAction("Prihlasit");
+                return Redirect("Prihlasit");
 
-            return Redirect("uzivatel/profil");
+            return Redirect("Profil");
         }
 
         public IActionResult Profil()
