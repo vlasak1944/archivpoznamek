@@ -2,6 +2,8 @@
 using WebApplication1.Data;
 using WebApplication1.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+
 namespace WebApplication1.Controllers
 {
     public class UzivatelController : Controller
@@ -64,11 +66,17 @@ namespace WebApplication1.Controllers
             if (!BCrypt.Net.BCrypt.Verify(heslo, hledany.Heslo))
                 return Redirect("Prihlasit");
 
+            HttpContext.Session.SetString("Uzivatel",hledany.Jmeno);
+
+
             return Redirect("Profil");
         }
 
         public IActionResult Profil()
          {
+            if (HttpContext.Session.GetString("Uzivatel") == null)
+                return Redirect("Prihlasit");
+
            return View();
          }
     }
