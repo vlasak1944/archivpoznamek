@@ -66,7 +66,7 @@ namespace WebApplication1.Controllers
             if (!BCrypt.Net.BCrypt.Verify(heslo, hledany.Heslo))
                 return RedirectToAction("Prihlasit");
 
-            return RedirectToAction("Profil");
+            return Redirect("uzivatel/profil");
         }
 
         public IActionResult Profil()
