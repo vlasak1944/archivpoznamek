@@ -79,5 +79,11 @@ namespace WebApplication1.Controllers
 
            return View();
          }
+        public IActionResult Odhlasit()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToPage("Index", "Stranky");
+        }
     }
 }
