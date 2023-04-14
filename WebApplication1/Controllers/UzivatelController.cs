@@ -77,13 +77,22 @@ namespace WebApplication1.Controllers
             if (HttpContext.Session.GetString("Uzivatel") == null)
                 return Redirect("Prihlasit");
 
+            Uzivatel prihlaseny = _context.Uzivatele
+                .Where(u => u.Jmeno == HttpContext.Session.GetString("Uzivatel"))
+                .FirstOrDefault();
+
+            if (prihlaseny == null)
+                return Redirect("Odhlasit");
+
+            return View(prihlaseny);
+
            return View();
          }
         public IActionResult Odhlasit()
         {
             HttpContext.Session.Clear();
 
-            return RedirectToPage("Index", "Stranky");
+            return Redirect("/Home/Index");
         }
     }
 }
