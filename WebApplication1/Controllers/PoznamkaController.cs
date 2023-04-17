@@ -4,11 +4,11 @@ using WebApplication1.Data;
 using WebApplication1.Models;
 namespace WebApplication1.Controllers;
 
-public class PoznamkaController1 : Controller
+public class PoznamkaController : Controller
 {
     private readonly MvcPoznamkyContext _context;
 
-    public PoznamkaController1(MvcPoznamkyContext context)
+    public PoznamkaController(MvcPoznamkyContext context)
     {
         _context = context;
     }
@@ -27,7 +27,7 @@ public class PoznamkaController1 : Controller
             return Redirect("Pridat");
 
         Uzivatel prihlaseny = _context.Uzivatele
-            .Where(u => u.Jmeno == HttpContext.Session.GetString("uzivatel"))
+            .Where(u => u.Jmeno == HttpContext.Session.GetString("Uzivatel"))
             .First();
 
         Poznamka novy = new Poznamka { Nadpis = nadpis, Telo = telo, Autor = prihlaseny };
@@ -35,7 +35,7 @@ public class PoznamkaController1 : Controller
         _context.Poznamky.Add(novy);
         _context.SaveChanges();
 
-        return RedirectToAction("Detail/" + novy.Id);
+        return Redirect("/Poznamka/Detail/" + novy.Id);
     }
     
     public IActionResult Detail(int id)
@@ -45,5 +45,15 @@ public class PoznamkaController1 : Controller
             .First();
 
         return View(nacteny);
+    }
+    public IActionResult Vsechny()
+    {
+        Uzivatel prihlaseny = _context.Uzivatele
+            .Where(u => u.Jmeno == HttpContext.Session.GetString("Uzivatel"))
+            .First();
+
+        List<Poznamka> poznamky = prihlaseny.Poznamky;
+
+        return View(poznamky);
     }
 }

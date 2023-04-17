@@ -8,8 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MvcPoznamkyContext>(opt => opt.UseSqlServer(builder.Configuration["DatabaseConnection"]));
 builder.Services.AddSession(options =>
+
 {
-    options.Cookie.Name = ".MvcBlog";
+    options.Cookie.Name = ".WebApplication1";
     options.Cookie.IsEssential = true;
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
@@ -34,3 +35,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+//entityframeworkcore.proxies

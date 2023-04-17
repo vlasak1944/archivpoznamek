@@ -1,0 +1,16 @@
+﻿@model List<WebApplication1.Models.Poznamka>
+@{
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Všechny poznámky";
+}
+@if(Model != null && Model.Count > 0)
+    {
+        foreach (WebApplication1.Models.Poznamka c in Model)
+        {
+        @:<p><b>@c.Nadpis</b></p>
+        @:<p>@c.Telo</p>
+        @:<hr />
+    }
+}
+<a href ="/Uzivatel/Profil">Zpět na profil  </a>
