@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Přidat poznámku";
+}
+
+<form method="post" action="/Poznamka/Pridat">
+    <input type="text" name="nadpis" placeholder="Nadpis..." /><br />
+    <textarea name="telo" placeholder="Tělo poznámky..."></textarea><br />
+    <input type="submit" value="Přidat poznámku" />
+</form>
+<a href= "/Uzivatel/Profil">Zpět na profil</a>

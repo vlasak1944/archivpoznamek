@@ -1,15 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace WebApplication1.Models
 {
-    public class Uzivatel
+    public class Poznamka
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Jmeno { get; set; }
+        public string Nadpis { get; set; }
         [Required]
-        public string Heslo { get; set; }
+        public string Telo { get; set; }
         [Required]
-        public List<Poznamka> Poznamky { get; set; }
+
+        public Uzivatel Autor { get; set; }
     }
 }

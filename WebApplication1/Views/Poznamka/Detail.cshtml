@@ -1,0 +1,11 @@
+﻿@model WebApplication1.Models.Poznamka
+@{
+    Layout = "_Layout";
+
+    ViewData["Title"] = "Detail poznámky";
+}
+
+<p><b>@Model.Nadpis</b></p>
+<p>@Model.Telo</p>
+
+<a href ="/Uzivatel/Profil">Zpět na profil</a>
