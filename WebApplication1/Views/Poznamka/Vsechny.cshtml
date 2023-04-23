@@ -6,11 +6,11 @@
 }
 @if(Model != null && Model.Count > 0)
     {
-        foreach (WebApplication1.Models.Poznamka c in Model)
-        {
-        @:<p><b>@c.Nadpis</b></p>
+    foreach (WebApplication1.Models.Poznamka c in Model)
+    {
+        @:<p><b>@c.Nadpis</b> <a href ="/Poznamka/Detail/@c.Id">Detail</a></p>
         @:<p>@c.Telo</p>
         @:<hr />
     }
 }
-<a href ="/Uzivatel/Profil">Zpět na profil  </a>
+<a href ="/Uzivatel/Profil">Zpět na profil</a>
